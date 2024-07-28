@@ -1,7 +1,7 @@
 let score = 0;
 let timeLeft = 30;
 let gameInterval;
-const words = ['apple', 'banana', 'cherry', 'date', 'fig', 'grape', 'kiwi', 'lemon', 'mango', 'orange'];
+const words = ['apple', 'banana', 'cherry', 'date', 'fig', 'grape', 'kiwi', 'lemon', 'mango', 'orange', 'peach', 'pear', 'plum', 'raspberry', 'strawberry', 'watermelon', 'blueberry', 'pineapple', 'coconut', 'pomegranate'];
 const targetWordElement = document.getElementById('target-key');
 const scoreElement = document.getElementById('score');
 const timeElement = document.getElementById('time');
