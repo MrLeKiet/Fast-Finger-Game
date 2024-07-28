@@ -1,20 +1,30 @@
 let score = 0;
-let timeLeft = 10;
+let timeLeft = 30;
 let gameInterval;
 const words = ['apple', 'banana', 'cherry', 'date', 'fig', 'grape', 'kiwi', 'lemon', 'mango', 'orange'];
 const targetWordElement = document.getElementById('target-key');
 const scoreElement = document.getElementById('score');
 const timeElement = document.getElementById('time');
-const startButton = document.getElementById('start-button');
+const wordInput = document.getElementById('word-input');
+const keys = document.querySelectorAll('.key');
+let gameStarted = false;
+
+function displayInitialTargetWord() {
+    const randomIndex = Math.floor(Math.random() * words.length);
+    const randomWord = words[randomIndex];
+    targetWordElement.textContent = randomWord;
+}
+
+displayInitialTargetWord();
 
 function startGame() {
     score = 0;
-    timeLeft = 10;
+    timeLeft = 30;
     scoreElement.textContent = `Score: ${score}`;
     timeElement.textContent = `Time left: ${timeLeft}s`;
-    startButton.disabled = true;
-    nextTargetWord();
     gameInterval = setInterval(updateTime, 1000);
+    gameStarted = true;
+    wordInput.focus();
 }
 
 function nextTargetWord() {
@@ -34,17 +44,35 @@ function updateTime() {
 function endGame() {
     clearInterval(gameInterval);
     alert(`Time's up! Your final score is ${score}`);
-    startButton.disabled = false;
-    targetWordElement.textContent = '';
+    gameStarted = false;
+    displayInitialTargetWord();
+    wordInput.blur();
 }
 
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' && document.getElementById('word-input').value === targetWordElement.textContent) {
+function handleKeyPress(event) {
+    const key = event.key.toLowerCase();
+    const keyElement = document.querySelector(`.key[data-key="${key}"]`);
+    
+    if (keyElement) {
+        keyElement.classList.add('pressed');
+        setTimeout(() => keyElement.classList.remove('pressed'), 100);
+    }
+    
+    if (!gameStarted) {
+        startGame();
+    } else {
+        wordInput.focus();
+    }
+}
+
+function handleInput(event) {
+    if (event.key === 'Enter' && wordInput.value.toLowerCase() === targetWordElement.textContent.toLowerCase()) {
         score++;
         scoreElement.textContent = `Score: ${score}`;
-        document.getElementById('word-input').value = '';
+        wordInput.value = '';
         nextTargetWord();
     }
-});
+}
 
-startButton.addEventListener('click', startGame);
+document.addEventListener('keydown', handleKeyPress);
+wordInput.addEventListener('keydown', handleInput);

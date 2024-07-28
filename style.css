@@ -3,17 +3,28 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100vw;
     height: 100vh;
     margin: 0;
-    background-color: #f0f0f0;
+    background-color: #b8b8b8;
 }
 
-#game-container {
-    text-align: center;
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 700px;
     background-color: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 #target-key {
@@ -26,16 +37,24 @@ body {
     margin-top: 10px;
     padding: 10px;
     font-size: 18px;
-    width: 100%;
-    box-sizing: border-box;
+    width: fit-content;
+    border: 0px solid;
+    outline: none;
+    background-color: #b8b8b8;
+    border-radius: 4px;
 }
 
-#score, #time {
+#score,
+#time {
     font-size: 20px;
     margin-top: 10px;
 }
 
 #keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: fit-content;
     margin-top: 20px;
 }
 
@@ -56,4 +75,9 @@ body {
     width: 40px;
     cursor: pointer;
     user-select: none;
+}
+
+.key.pressed {
+    background-color: #ffeb3b;
+    border-color: #fbc02d;
 }
