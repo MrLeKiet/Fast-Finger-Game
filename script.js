@@ -1,6 +1,7 @@
 let score = 0;
 let timeLeft = 30;
 let gameInterval;
+let min = 0;
 const words = ['apple', 'banana', 'cherry', 'date', 'fig', 'grape', 'kiwi', 'lemon', 'mango', 'orange', 'peach', 'pear', 'plum', 'raspberry', 'strawberry', 'watermelon', 'blueberry', 'pineapple', 'coconut', 'pomegranate'];
 const targetWordElement = document.getElementById('target-key');
 const scoreElement = document.getElementById('score');
@@ -52,12 +53,12 @@ function endGame() {
 function handleKeyPress(event) {
     const key = event.key.toLowerCase();
     const keyElement = document.querySelector(`.key[data-key="${key}"]`);
-    
+
     if (keyElement) {
         keyElement.classList.add('pressed');
         setTimeout(() => keyElement.classList.remove('pressed'), 100);
     }
-    
+
     if (!gameStarted) {
         startGame();
     } else {
@@ -72,7 +73,18 @@ function handleInput(event) {
         wordInput.value = '';
         nextTargetWord();
     }
+    else if (event.key === 'Enter' && wordInput.value.toLowerCase() !== targetWordElement.textContent.toLowerCase()) {
+        score--;
+        scoreElement.textContent = `Score: ${score}`;
+        wordInput.value = '';
+        nextTargetWord();
+    }
+    if (score < 0) {
+        score = 0;
+        scoreElement.textContent = `Score: ${score}`;
+    }
 }
+
 
 document.addEventListener('keydown', handleKeyPress);
 wordInput.addEventListener('keydown', handleInput);
